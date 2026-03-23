@@ -143,32 +143,7 @@ app.get("/products", (req,res)=>{
   });
 });
 
-app.put("/change-password", (req,res)=>{
 
-const {email,oldPass,newPass} = req.body;
-
-db.query(
-"SELECT * FROM users WHERE email=? AND password=?",
-[email,oldPass],
-(err,result)=>{
-
-if(result.length==0){
-return res.send("Wrong old password ❌");
-}
-
-db.query(
-"UPDATE users SET password=? WHERE email=?",
-[newPass,email],
-(err2)=>{
-if(err2) return res.send(err2);
-res.send("Password Updated ✅");
-}
-);
-
-}
-);
-
-});
 // 🔥 ADD PRODUCT
 app.post("/add-product", upload.single("image"), (req, res) => {
  
@@ -273,37 +248,6 @@ app.post("/create-order", async (req,res)=>{
   }
 
 });
-// ✅ SIGNUP
-app.post("/signup", (req,res)=>{
-  const {name,email,password} = req.body;
-
-  db.query(
-    "INSERT INTO users (name,email,password) VALUES (?,?,?)",
-    [name,email,password],
-    (err,result)=>{
-      if(err) return res.send(err);
-      res.send("User created");
-    }
-  );
-});
-
-// ✅ LOGIN
-app.post("/login", (req,res)=>{
-  const {email,password} = req.body;
-
-  db.query(
-    "SELECT * FROM users WHERE email=? AND password=?",
-    [email,password],
-    (err,result)=>{
-      if(result.length>0){
-        res.json({status:"success", user:result[0]});
-      }else{
-        res.json({status:"fail"});
-      }
-    }
-  );
-});
-
 
 // ================= OTP SYSTEM =================
 const nodemailer = require("nodemailer");
@@ -394,7 +338,7 @@ if(String(record.otp) === String(enteredOtp)){
       res.json({status:"success", user:result[0]});
     }else{
       db.query(
-        "INSERT INTO users (name,email,password) VALUES (?,?,?)",
+        "INSERT INTO users (name,email) VALUES (?,?)",
         ["User", email, ""],
         ()=>{
           res.json({
