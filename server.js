@@ -250,17 +250,11 @@ app.post("/create-order", async (req,res)=>{
 });
 
 // ================= OTP SYSTEM =================
-const nodemailer = require("nodemailer");
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 let otpStore = {};
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "frostybites0313@gmail.com",
-    pass: "vwpk odpk dcxh ejkw"
-  }
-});
 
 // SEND OTP
 app.post("/send-otp", (req,res)=>{
@@ -276,14 +270,14 @@ if(record && record.resetTime && Date.now() > record.resetTime){
   record = null;
 }
 
-const otp = Math.floor(1000 + Math.random()*9000);
+const otp = Math.floor(100000 + Math.random()*900000);
 
 otpStore[email] = {
   otp: otp,
   expires: Date.now() + 2 * 60 * 1000, // 2 mins
   attempts: 0,
   resendCount: (otpStore[email]?.resendCount || 0) + 1,
-  resetTime: Date.now() + 24 * 60 * 60 * 1000
+  resetTime: Date.now() + 24 * 60 * 60 * 100000
 };
 
 // 🔥 LIMIT RESEND
@@ -291,11 +285,11 @@ if(otpStore[email].resendCount > 10){
   return res.send("Max OTP requests reached ❌ (Try after 24 hrs)");
 }
 
-transporter.sendMail({
-from: "frostybites0313@gmail.com",
-to: email,
-subject: "Frosty Bites OTP",
-text: "Your OTP is " + otp
+await resend.emails.send({
+  from: "onboarding@resend.dev", // later domain change cheyyachu
+  to: email,
+  subject: "Frosty Bites OTP",
+  html: `<h2>Your OTP is: ${otp}</h2>`
 });
 
 res.send("OTP Sent");
