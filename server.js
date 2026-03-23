@@ -271,7 +271,7 @@ let email = req.body.email.trim().toLowerCase();
 let record = otpStore[email];
 
 // ⏱ reset after 24 hrs
-if(record && Date.now() > record.resetTime){
+if(record && record.resetTime && Date.now() > record.resetTime){
   delete otpStore[email];
   record = null;
 }
@@ -283,10 +283,11 @@ otpStore[email] = {
   expires: Date.now() + 2 * 60 * 1000, // 2 mins
   attempts: 0,
   resendCount: (otpStore[email]?.resendCount || 0) + 1
+  resetTime: Date.now() + 24 * 60 * 60 * 1000
 };
 
 // 🔥 LIMIT RESEND
-if(otpStore[email].resendCount > 3){
+if(otpStore[email].resendCount > 10){
   return res.send("Max OTP requests reached ❌ (Try after 24 hrs)");
 }
 
