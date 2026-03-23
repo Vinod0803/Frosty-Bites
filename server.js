@@ -49,10 +49,11 @@ const razorpay = new Razorpay({
 });
 // ✅ MySQL connection
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Vinnu0313@", // mee mysql password
-  database: "vinnu_store"
+host: "mysql.railway.internal",
+user: "root",
+password: "Vinnu0313@",
+database: "railway",
+port: 3306
 });
 
 db.connect(err => {
