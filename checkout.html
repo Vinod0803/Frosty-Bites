@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout - FROSTY BITES</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+body{
+  background: #f8f8f8;
+}
+.checkoutContainer{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* LEFT SIDE */
+.cartSection{
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* RIGHT SIDE */
+.summarySection{
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 20px;
+}
+
+/* CART ITEMS */
+.cartItem{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cartItem img{
+  width: 50px;
+  border-radius: 10px;
+}
+
+/* INPUTS */
+.summarySection input{
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* BUTTON */
+.payBtn{
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg,#ff6600,#ff8533);
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.payBtn:hover{
+  transform: scale(1.03);
+  transition: 0.2s;
+}
+.cartTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 🔥 center lo ravali */
+  gap: 10px; /* space between text & icon */
+  font-size: 22px;
+}
+
+.cartTitleIcon {
+  width: 26px;
+  height: 26px;
+}
+</style>
+<body>
+<div class="header">
+  <div class="logo">
+    <img src="images/logo.png" alt="FROSTY BITES">
+    <h3>FROSTY BITES</h3>
+  </div>
+
+  <div class="search">
+    <input type="text" placeholder="Search for pickles,masalas,icecreams,snacks...." id="search" onkeyup="searchProduct()">
+  </div>
+  <button id="loginBtn" onclick="openLogin()" class="authBtn">Login</button>
+
+  <div class="userArea">
+    <span id="welcomeUser"></span>
+    <img id="headerProfilePic" src="images/user.jpg" onclick="openAccount()">
+  </div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:15px 20px">
+
+  <button onclick="goBack()"
+    style="background:#ff6600;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer">
+    ⬅ Back
+  </button>
+
+  <h2 class="cartTitle" style="margin:0">Your Cart<img src="images/cart_transparent.png"class="cartTitleIcon"></h2>
+
+  <div></div> <!-- spacing kosam -->
+</div>
+<div class="checkoutContainer">
+
+  <!-- LEFT: CART -->
+  <div class="cartSection">
+  <h2 class="cartTitle">
+  Checkout Items
+  </h2>
+  <hr>
+    <div id="cartItems"></div>
+  </div>
+
+  <!-- RIGHT: SUMMARY -->
+  <div class="summarySection">
+      <p id="deliveryText">Add ₹199 more for FREE DELIVERY</p>
+      <div class="progressBar">
+      <div class="progressFill" id="progressFill"></div>
+      </div>
+    <h3>Order Summary</h3>
+
+    <p>Items Total: ₹<span id="cartAmount">0</span></p>
+    <p>Delivery: ₹<span id="deliveryFee">0</span></p>
+
+    <h2>Total: ₹<span id="finalAmount">0</span></h2>
+
+    <h3>Delivery Details</h3>
+
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="phone" placeholder="Phone Number" required>
+    <input type="text" id="address" placeholder="Address" required>
+
+    <button onclick="payNow()" class="payBtn">
+      Pay Now 💰
+    </button>
+
+  </div>
+
+</div>
+<script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+
+  let savedCart = localStorage.getItem("cart");
+
+  if(savedCart){
+    cart = JSON.parse(savedCart);
+  }
+
+  updateCart(); // 🔥
+
+});
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+</html>

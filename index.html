@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frosty Bites</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+<div class="header">
+  <div class="logo">
+    <img src="images/logo.png" alt="Vinnu Pickles">
+    <h3>FROSTY BITES</h3>
+  </div>
+
+  <div class="search">
+    <input type="text" placeholder="Search for pickles,masalas,icecreams,snacks...." id="search" onkeyup="searchProduct()">
+  </div>
+  <button id="loginBtn" onclick="openLogin()" class="authBtn">Login</button>
+
+  <div class="userArea">
+    <span id="welcomeUser"></span>
+    <img id="headerProfilePic" src="images/user.jpg" onclick="openAccount()">
+  <div class="cart" onclick="goToCheckout()">
+     <i class="fa-solid fa-bag-shopping"></i>
+    <span class="cartBadge" id="cartCount">0</span>
+  </div>
+  </div>
+</div>
+
+<div class="banner">
+  <img src="images/banner2.jpg" class="banner-img">
+
+  <div class="banner-text">
+    <h1>Authentic flavors delivered fresh</h1>
+    <p>Pickles, masalas, snacks & ice creams 🍦</p>
+    <button onclick="goToProducts()">Order Now →</button>
+  </div>
+</div>
+ <!-- 🔥 CategoryGrid -->
+<center>
+<div id="categoryGrid" style="align-items: center;justify-content: center;">
+<h1>Explore our categories</h1>
+<p>From tangy pickles to aromatic masalas, crunchy snacks to creamy ice cream</p>
+</div>
+</center>
+<div class="categoryGrid">
+  <div class="catCard" style="background-image: url('images/all.jpg')" onclick="openCategory('all',this)">
+    <span>All</span>
+  </div>
+  <div class="catCard" style="background-image: url('images/pickles.jpg')" onclick="openCategory('pickle',this)">
+    <span>Pickles</span>
+  </div>
+
+  <div class="catCard" style="background-image: url('images/masala.jpg')" onclick="openCategory('masala',this)">
+    <span>Masalas</span>
+  </div>
+
+  <div class="catCard" style="background-image: url('images/snacks.jpg')" onclick="openCategory('snack',this)">
+    <span>Snacks</span>
+  </div>
+
+  <div class="catCard" style="background-image: url('images/icecream.png')"  onclick="openCategory('icecream',this)">
+    <span>Ice Cream</span>
+  </div>
+  <div class="catCard" style="background-image: url('images/sweets.jpg')"onclick="openCategory('sweet',this)">
+    <span>Sweets</span>
+  </div>
+  <div class="catCard" style="background-image: url('images/cooldrinks.webp')"onclick="openCategory('drink',this)">
+    <span>Cool Drinks</span>
+  </div>
+</div>
+ <!-- 🔥 CategoryRow---
+<div class="categoryRow">
+
+<div class="cat active" onclick="filterCategory('all',this)">
+<img src="images/all.jpg"><p>All</p>
+</div>
+
+<div class="cat" onclick="filterCategory('pickle',this)">
+<img src="images/pickles.jpg"><p>Pickles</p>
+</div>
+
+<div class="cat" onclick="filterCategory('masala',this)">
+<img src="images/masala.jpg"><p>Masalas</p>
+</div>
+
+<div class="cat" onclick="filterCategory('sweet',this)">
+<img src="images/sweets.jpg"><p>Sweets</p>
+</div>
+
+<div class="cat" onclick="filterCategory('snack',this)">
+<img src="images/snacks.jpg"><p>Snacks</p>
+</div>
+
+<div class="cat" onclick="filterCategory('drink',this)">
+<img src="images/cooldrinks.webp"><p>Cool Drinks</p>
+</div>
+<div class="cat" onclick="filterCategory('icecream',this)">
+  <img src="images/icecream.png">
+  <p>Ice Cream</p>
+</div>
+
+</div>
+<div class="products" id="products"></div>
+--->
+<div id="loginModal" class="authModal">
+
+<div class="authBox">
+<div class="modalHeader">
+<h3>Login</h3>
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+</div>
+<input type="text" id="liName" placeholder="Enter Name">
+<input type="email" id="liEmail" placeholder="Enter Email">
+
+<button onclick="sendOTP()" class="authBtn">Send OTP</button>
+
+<input type="text" id="otpInput" placeholder="Enter OTP">
+<button id="resendBtn" onclick="resendOTP()" disabled>
+Resend OTP (30s)
+</button>
+
+<button onclick="verifyOTP()">Login with OTP</button>
+
+</div>
+
+</div>
+
+<div id="accountModal" class="authModal">
+
+<div class="authBox">
+
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+
+<h3>👤 My Profile</h3>
+
+<img id="profilePicPreview" 
+style="width:80px;height:80px;border-radius:50%;margin:10px 0">
+<input type="file" id="profilePicInput"  onchange="uploadProfilePic()">
+<input type="text" id="profileNameInput" placeholder="Name">
+<input type="email" id="profileEmailInput" placeholder="Email">
+<input type="text" id="profilePhoneInput" placeholder="Phone">
+
+<button onclick="updateProfile()">Save Profile</button>
+
+<hr>
+<button onclick="viewOrders()">My Orders</button>
+<button onclick="logout()" style="background:red;color:white">
+Logout
+</button>
+
+</div>
+</div>
+
+<div id="ordersModal" class="authModal" style="display:none;">
+
+<div class="authBox">
+
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+
+<h3>📦 My Orders</h3>
+
+<div id="ordersList"></div>
+
+</div>
+
+</div>
+<div id="invoiceModal" class="authModal" style="display:none;">
+
+<div class="authBox">
+
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+
+<h3>🧾 Invoice</h3>
+
+<div id="invoiceContent"></div>
+
+<button onclick="printInvoice()" style="margin-top:10px;background:green;color:white;padding:10px;border:none">
+Download / Print
+</button>
+
+</div>
+
+</div>
+
+<div id="chatToggle" onclick="toggleChat()">💬 Chat</div>
+
+<div id="chatContainer">
+
+  <div class="chatHeader">
+    Vinnu Pickles Support
+    <span class="closeChat" onclick="toggleChat()">✖</span>
+  </div>
+
+  <div id="chatMessages">
+    <div class="bot">Hi 👋 Ask anything about Vinnu Pickles!</div>
+  </div>
+
+  <div class="chatInputBox">
+    <input type="text" id="userInput" placeholder="Ask your question..." onkeypress="checkEnter(event)">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+</div>
+<div id="successToast"></div>
+
+<div id="editNameModal" class="authModal" style="display:none;">
+
+<div class="authBox">
+
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+
+<h3>Edit Name</h3>
+<input type="text" id="newName" placeholder="Enter new name">
+
+<button onclick="saveName()">Save</button>
+
+</div>
+</div>
+<div id="successPage" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:white;z-index:9999;text-align:center;padding-top:100px">
+
+<h1>🎉 Order Confirmed</h1>
+
+<p id="orderIdText"></p>
+
+<p>Estimated Delivery: 30 mins 🚚</p>
+
+<button onclick="closeSuccessPage()" style="padding:10px 20px;background:green;color:white;border:none;border-radius:5px">
+Continue Shopping
+</button>
+
+</div>
+<script src="script.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+</html>
+

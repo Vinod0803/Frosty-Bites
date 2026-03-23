@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Products - Frosty Bites</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">
+    <img src="images/logo.png" alt="Vinnu Pickles">
+    <h3>FROSTY BITES</h3>
+  </div>
+
+  <div class="search">
+    <input type="text" placeholder="Search for pickles,masalas,icecreams,snacks...." id="search" onkeyup="searchProduct()">
+  </div>
+  <button id="loginBtn" onclick="openLogin()" class="authBtn">Login</button>
+
+  <div class="userArea">
+    <span id="welcomeUser"></span>
+    <img id="headerProfilePic" src="images/user.jpg" onclick="openAccount()">
+  <div class="cart" onclick="toggleCart()">
+     <i class="fa-solid fa-bag-shopping"></i>
+    <span class="cartBadge" id="cartCount">0</span>
+  </div>
+  </div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:15px 20px">
+
+  <button onclick="goBack()"
+    style="background:#ff6600;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer">
+    ⬅ Back
+  </button>
+</div>
+<!-- 🔥 HERO -->
+<div class="productsHero">
+  <h1>Our Products</h1>
+  <p>Discover authentic flavors from across India</p>
+</div>
+
+<!-- 🔥 CATEGORY BUTTONS -->
+<div class="filterBar">
+
+  <button class="cat active" onclick="filterCategory('all',this)">All</button>
+  <button class="cat" onclick="filterCategory('pickle',this)">Pickles</button>
+  <button class="cat" onclick="filterCategory('masala',this)">Masalas</button>
+  <button class="cat" onclick="filterCategory('snack',this)">Snacks</button>
+  <button class="cat" onclick="filterCategory('icecream',this)">Ice Cream</button>
+  <button class="cat" onclick="filterCategory('drink',this)">Cool Drinks</button>
+  <button class="cat" onclick="filterCategory('sweet',this)">Sweets</button>
+</div>
+
+<!-- 🔥 PRODUCTS -->
+<div class="products" id="products"></div>
+<!-- 🔥 CART -->
+ 
+<div id="accountModal" class="authModal">
+
+<div class="authBox">
+
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+
+<h3>👤 My Profile</h3>
+
+<img id="profilePicPreview" 
+style="width:80px;height:80px;border-radius:50%;margin:10px 0">
+<input type="file" id="profilePicInput"  onchange="uploadProfilePic()">
+<input type="text" id="profileNameInput" placeholder="Name">
+<input type="email" id="profileEmailInput" placeholder="Email">
+<input type="text" id="profilePhoneInput" placeholder="Phone">
+
+<button onclick="updateProfile()">Save Profile</button>
+
+<hr>
+<button onclick="viewOrders()">My Orders</button>
+<button onclick="logout()" style="background:red;color:white">
+Logout
+</button>
+
+</div>
+</div>
+
+<div id="ordersModal" class="authModal" style="display:none;">
+
+<div class="authBox">
+
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+
+<h3>📦 My Orders</h3>
+
+<div id="ordersList"></div>
+
+</div>
+
+</div>
+<div id="invoiceModal" class="authModal" style="display:none;">
+
+<div class="authBox">
+
+<span class="closeBtn" onclick="closeAuth()">✖</span>
+
+<h3>🧾 Invoice</h3>
+
+<div id="invoiceContent"></div>
+
+<button onclick="printInvoice()" style="margin-top:10px;background:green;color:white;padding:10px;border:none">
+Download / Print
+</button>
+
+</div>
+
+</div>
+<div id="chatToggle" onclick="toggleChat()">💬 Chat</div>
+
+<div id="chatContainer">
+
+<div class="chatHeader">
+Vinnu Pickles Support
+<span class="closeChat" onclick="toggleChat()">✖</span>
+</div>
+
+<div id="chatMessages">
+<div class="bot">Hi 👋 Ask anything about Vinnu Pickles!</div>
+</div>
+
+<div class="chatInputBox">
+<input type="text" id="userInput" placeholder="Ask your question..." onkeypress="checkEnter(event)">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+</div>
+<div id="successToast"></div>
+<script>
+function toggleCart(){
+  window.location.href = "checkout.html";
+}
+document.addEventListener("DOMContentLoaded", () => {
+  let cartPage = document.getElementById("cartPage");
+  let overlay = document.getElementById("overlay");
+
+  if(cartPage){
+    cartPage.style.right = "-400px";
+  }
+
+  if(overlay){
+    overlay.style.display = "none";
+  }
+
+  let cat = localStorage.getItem("selectedCategory");
+
+  if(cat){
+    setTimeout(()=>{
+      filterCategory(cat, document.querySelector(".cat"));
+      localStorage.removeItem("selectedCategory");
+    },500);
+  }
+
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
