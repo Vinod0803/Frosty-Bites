@@ -257,7 +257,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 let otpStore = {};
 
 // SEND OTP
-app.post("/send-otp", (req,res)=>{
+app.post("/send-otp", async(req,res)=>{
 
 let email = req.body.email.trim().toLowerCase();
 
