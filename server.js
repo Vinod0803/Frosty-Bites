@@ -282,7 +282,7 @@ otpStore[email] = {
   otp: otp,
   expires: Date.now() + 2 * 60 * 1000, // 2 mins
   attempts: 0,
-  resendCount: (otpStore[email]?.resendCount || 0) + 1
+  resendCount: (otpStore[email]?.resendCount || 0) + 1,
   resetTime: Date.now() + 24 * 60 * 60 * 1000
 };
 
