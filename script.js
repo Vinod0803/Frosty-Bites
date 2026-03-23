@@ -1,4 +1,4 @@
-const API = "http://localhost:5000";
+const API = https://frosty-backend.onrender.com
 let FREE_DELIVERY = 199;
 
 // ================= PRODUCTS =================
