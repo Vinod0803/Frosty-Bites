@@ -48,13 +48,7 @@ const razorpay = new Razorpay({
   key_secret: "xxxxxxxxxxxxxx"     // 👈 paste yours
 });
 // ✅ MySQL connection
-const db = mysql.createConnection({
-host: "mysql.railway.internal",
-user: "root",
-password: "Vinnu0313@",
-database: "railway",
-port: 3306
-});
+const db = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
 
 db.connect(err => {
   if (err) {
