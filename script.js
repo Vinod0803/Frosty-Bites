@@ -1,4 +1,4 @@
-const API = "https://frosty-bites-p1lh.onrender.com";
+const API = "https://frosty-backend.onrender.com";
 let FREE_DELIVERY = 199;
 
 // ================= PRODUCTS =================
