@@ -48,7 +48,13 @@ const razorpay = new Razorpay({
   key_secret: "xxxxxxxxxxxxxx"     // 👈 paste yours
 });
 // ✅ MySQL connection
-const db = mysql.createConnection(process.env.MYSQL_URL);
+const db = mysql.createConnection({
+  uri: process.env.MYSQL_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
 db.connect(err => {
   if (err) {
     console.log("DB Error ❌", err);
