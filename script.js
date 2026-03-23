@@ -1,10 +1,9 @@
-const API = https://frosty-backend.onrender.com
+const API = "https://frosty-backend.onrender.com";
 let FREE_DELIVERY = 199;
 
 // ================= PRODUCTS =================
 
 function renderProducts(products){
-
 let html="";
 
 products.forEach((p,i)=>{
@@ -51,7 +50,7 @@ else if(p.category=="icecream") icon="🍦";
 
 html+=`
 <div class="card" data-cat="${p.category}">
-<img src="http://localhost:5000/uploads/${p.image}">
+<img src="${API}/uploads/${p.image}">
 <h3>${icon} ${p.name}</h3>
 ${dropdown}
 <p class="price">₹<span id="price${i}">${p.price}</span></p>
