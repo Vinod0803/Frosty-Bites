@@ -88,6 +88,7 @@ th { background:#ff4757; color:white }
 <th>ID</th>
 <th>Name</th>
 <th>Email</th>
+<th>Phone</th>th>
 <th>Amount</th>
 <th>Payment</th>
 <th>Status</th>
@@ -217,7 +218,7 @@ async function loadProducts(){
 
 async function loadOrders(){
 
-  let res = await fetch("http://localhost:5000/orders");
+  let res = await fetch("https://frosty-backend.onrender.com/orders");
   let orders = await res.json();
 
   let html="";
@@ -229,9 +230,11 @@ async function loadOrders(){
       <td>${o.id}</td>
       <td>${o.name}</td>
       <td>${o.email}</td>
+      <td>${o.phone || "-"}</td>
       <td>₹${o.amount}</td>
-      <td>${o.payment_id}</td>
-      <td>${o.created_at}</td>
+      <td>${o.payment_id || "-"}</td>
+      <td>${o.status || "Pending"}</td>
+      <td>${new Date(o.created_at).toLocaleString()}</td>
     </tr>
     `;
 
