@@ -270,14 +270,14 @@ if(record && record.resetTime && Date.now() > record.resetTime){
   record = null;
 }
 
-const otp = Math.floor(100000 + Math.random()*900000);
+const otp = Math.floor(1000 + Math.random()*9000);
 
 otpStore[email] = {
   otp: otp,
   expires: Date.now() + 2 * 60 * 1000, // 2 mins
   attempts: 0,
   resendCount: (otpStore[email]?.resendCount || 0) + 1,
-  resetTime: Date.now() + 24 * 60 * 60 * 100000
+  resetTime: Date.now() + 24 * 60 * 60 * 1000
 };
 
 // 🔥 LIMIT RESEND
