@@ -212,11 +212,11 @@ app.delete("/delete-order/:id", (req,res)=>{
 });
 // 🔥 SAVE ORDER
 app.post("/order", (req,res)=>{
-  const {name,email,address,amount,payment_id} = req.body;
+  const {name,email,phone,address,amount,payment_id} = req.body;
 
   db.query(
-    "INSERT INTO orders (name,email,address,amount,payment_id) VALUES (?,?,?,?,?)",
-    [name,email,address,amount,payment_id],
+    "INSERT INTO orders (name,email,phone,address,amount,payment_id) VALUES (?,?,?,?,?,?)",
+    [name,email,phone,address,amount,payment_id],
     (err,result)=>{
       if(err) return res.send(err);
       res.send("Order Saved");
