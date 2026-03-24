@@ -625,7 +625,23 @@ var options={
   handler: async function(response){
 
     let orderId = Date.now();
+    let phone = document.getElementById("phone").value;
 
+  // 🔥 SAVE ORDER IN DB
+  await fetch(API + "/order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name,
+      email,
+      phone,
+      address,
+      amount,
+      payment_id: response.razorpay_payment_id
+    })
+  });
     showSuccessPage(orderId);
 
     cart = {};
